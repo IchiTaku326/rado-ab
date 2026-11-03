@@ -6,7 +6,18 @@ authors:
     given-names: "Takumi"
 repository-code: "https://github.com/IchiTaku326/rado-ab"
 license: MIT
-version: "1"
+doi: 10.5281/zenodo.23902480
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23902480
+    description: "This repository, release v1 (Zenodo)"
+  - type: doi
+    value: 10.5281/zenodo.23902080
+    description: "Paper 1 (preprint, Zenodo)"
+  - type: doi
+    value: 10.5281/zenodo.23902621
+    description: "Paper 2 (preprint, Zenodo)"
+version: "1.1"
 date-released: "2026-11-03"
 abstract: "Two preprints on the Rado numbers of a(x-y)=bz (three-colour lower bound for all a<b, R_3(a,a+1)=a^3+5a^2+8a for a>=7, recursive lower bounds for every number of colours, reduction of the three-colour upper bound to one conjecture; R_4(3(x-y)=4z)=461, R_4(5(x-y)=4z)=741, R_4(6(x-y)=5z)=1501) with all programs and recorded results. Proofs checked by lrat-check and cake_lpr. Not peer reviewed."
 keywords:

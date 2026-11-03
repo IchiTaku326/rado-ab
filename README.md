@@ -10,6 +10,12 @@ with k colours contains a monochromatic solution of `a(x − y) = bz` (x, y, z n
 | 1. *Rado numbers of a(x−y)=bz with a<b: two colours, lower bounds for every number of colours, and the three-colour upper bound up to one statement* (21 pages) | `paper1/Ichikawa_Rado_numbers_with_a_less_than_b.pdf` |
 | 2. *Four-colour Rado numbers of a(x−y)=bz: R₄(3(x−y)=4z)=461, R₄(5(x−y)=4z)=741, R₄(6(x−y)=5z)=1501* (6 pages) | `paper2/Ichikawa_four-colour_Rado_numbers_461_741_1501.pdf` |
 
+**DOIs (Zenodo):**
+paper 1: https://doi.org/10.5281/zenodo.23902080 ·
+paper 2: https://doi.org/10.5281/zenodo.23902621 ·
+this repository, release v1: https://doi.org/10.5281/zenodo.23902480
+(later releases get their own DOIs; all versions are listed on the Zenodo record page).
+
 Earlier note (separate record): R₄(2(x−y)=3z) = 226, https://doi.org/10.5281/zenodo.23582301 (code: https://github.com/IchiTaku326/rado-226).
 
 ## Results and their status
