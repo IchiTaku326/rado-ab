@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.cnf
+*.drat
+*.lrat
+!results/sym_j1/family.cnf
+!results/sym_j1/family.lrat
+bin_linux/*
+!bin_linux/README.md
+paper*/*.aux
+paper*/*.log
+paper*/*.fls
+paper*/*.fdb_latexmk
+paper*/*.out
+paper*/*.toc
+paper*/*.synctex.gz
+paper*/main.pdf

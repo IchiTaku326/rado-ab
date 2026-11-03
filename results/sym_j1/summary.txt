@@ -1,0 +1,1 @@
+j=1 Q1=10 Q2=10 R=12 aref=60: elements 1236, identity triples 112177 (coincidences dropped 0), CNF 337768 clauses -> UNSAT; valid for a >= 28

@@ -1,0 +1,219 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs,array}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage[expansion=false]{microtype}
+\usepackage{url}
+\usepackage[margin=2.6cm]{geometry}
+\usepackage[pdftitle={Four-colour Rado numbers of a(x-y)=bz},pdfauthor={Takumi Ichikawa},colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathrm{R}}
+\newcommand{\todo}[1]{\textcolor{red}{[#1]}}
+\setlist{itemsep=2pt,topsep=4pt}
+\allowdisplaybreaks
+
+\title{Four-colour Rado numbers of $a(x-y)=bz$:\\[4pt]\large $\R_4\bigl(3(x-y)=4z\bigr)=461$, $\ \R_4\bigl(5(x-y)=4z\bigr)=741$,\\ $\R_4\bigl(6(x-y)=5z\bigr)=1501$}
+\author{Takumi Ichikawa\\ \small\texttt{github.com/IchiTaku326}}
+\date{Version 1, 3 November 2026 \\ \small (preprint, not peer reviewed)}
+\begin{document}
+\maketitle
+\begin{abstract}
+Let $\R_k(a,b)$ be the least $n$ such that every $k$-colouring of $\{1,\dots,n\}$ has a monochromatic solution of $a(x-y)=bz$ ($\gcd(a,b)=1$).
+We determine three new four-colour values, $\R_4(3,4)=461$, $\R_4(5,4)=741$ and $\R_4(6,5)=1501$. The lower bounds are explicit colourings (one of them from a family proved for every number of colours), the upper bounds are SAT computations on a small subset of $[n]$ split by cube-and-conquer, with every proof checked by the formally verified checker \texttt{cake\_lpr}. We also prove $\R_k(a(x-y)=(a-1)z)\ge a^k+a^{k-1}-2a+1$ for all $k,a\ge2$, conjecture equality for $k=4$ (true for $a=3,4,5,6$; for $a=4$ only by a SAT solver without proof file), and collect lower bounds and evidence on a conjectured recursion $\R_4=b(\R_3+2a)+1$ for $a<b$.
+\end{abstract}
+
+\section{Introduction}
+For positive integers $a,b,k$ the \emph{Rado number} $\R_k(a,b)$ is the least $n$ such that every $k$-colouring of $[n]=\{1,\dots,n\}$ contains a monochromatic solution of $a(x-y)=bz$ (the numbers $x,y,z$ need not be distinct). We always assume $\gcd(a,b)=1$; then every solution has the form
+\[
+  z=as,\qquad x-y=bs\qquad(s\ge1).
+\]
+Known four-colour values include $\R_4(1,1)=45$ (one more than the Schur number $S(4)=44$), $\R_4(2,3)=226$ \cite{Ich26a}, and the values listed in \cite{CDW22}. For three colours see \cite{CDW22,AZB25,Ich26b}.
+
+\begin{theorem}\label{thm:main}
+\[
+  \R_4\bigl(3(x-y)=4z\bigr)=461,\qquad \R_4\bigl(5(x-y)=4z\bigr)=741,\qquad \R_4\bigl(6(x-y)=5z\bigr)=1501 .
+\]
+\end{theorem}
+For each value, the lower bound is an explicit colouring of $[n-1]$ (Section~\ref{sec:lower}) and the upper bound is a computer proof that every colouring of $[n]$ fails (Section~\ref{sec:method}).
+
+\clearpage
+\section{Upper bounds: method}\label{sec:method}
+\begin{lemma}[small set]\label{lem:small}
+Let $K\ge1$ and
+\[
+  S=\{\,am\le n:\ m\le K\,\}\ \cup\ \{\,x\le n:\ x\equiv n\pmod b\,\}.
+\]
+If $S$ has no $k$-colouring without monochromatic solutions inside $S$, then $\R_k\le n$. Moreover we may assume that the $i$-th smallest element of $S$ uses one of the colours $0,\dots,i-1$ (``first fit'').
+\end{lemma}
+\begin{proof}
+A good colouring of $[n]$ restricts to $S$. Renaming the colours in order of first appearance gives a first-fit colouring.
+\end{proof}
+
+We take $K=\R_3$. The formula for $S$ is about $25$ times smaller than for $[n]$, but still too hard for a single solver run. We therefore use cube-and-conquer \cite{HKM16}:
+\begin{enumerate}
+\item The \emph{root cubes} are all first-fit colourings of the first $7$ elements of $S$.
+\item A cube that is not solved within a time limit is split further by the next $3$ elements of $S$.
+\item Every leaf cube is shown unsatisfiable by CaDiCaL, which writes an LRAT proof for the formula with the cube added as unit clauses.
+\item Every proof is checked by \texttt{lrat-check} and by the formally verified checker \texttt{cake\_lpr} \cite{THM21}.
+\item A separate program checks that the tree is complete, i.e.\ that the leaves cover all first-fit colourings.
+\end{enumerate}
+In addition, every clause of the encoding is re-checked against the equation by an independent routine.
+
+\begin{center}
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{lrrrl}
+\toprule
+equation & $n$ & $K=\R_3$ & leaf cubes & checked by \texttt{cake\_lpr}\\
+\midrule
+$3(x-y)=4z$ & $461$ & $109$ & $22863$ & all\\
+$5(x-y)=4z$ & $741$ & $141$ & $813$ & all\\
+$6(x-y)=5z$ & $1501$ & $241$ & $6833$ & all\\
+\bottomrule
+\end{tabular}
+\end{center}
+Here $\R_3(3,4)=109=b(b^2+b+2a+1)+1$ \cite{AZB25,Ich26b}, and $\R_3(5,4)=141$, $\R_3(6,5)=241$ are the values $a^3+(a-1)^2$ of \cite{CDW22}.
+
+\clearpage
+\section{Lower bounds}\label{sec:lower}
+\paragraph{The value $461$.} The recursive colouring of \cite[Lemma~4.1 and Theorem~4.5]{Ich26b} for $(a,b)=(3,4)$ and $k=4$ colours $[460]$ without monochromatic solutions. We also checked this colouring against all solutions.
+
+\paragraph{The values $741$ and $1501$.} They are the case $k=4$, $a=5,6$ of the following theorem.
+
+\begin{theorem}\label{thm:H3}
+For all $k\ge2$ and $a\ge2$:\quad $\R_k\bigl(a(x-y)=(a-1)z\bigr)\ge a^k+a^{k-1}-2a+1$.
+\end{theorem}
+
+\begin{proof}
+Let $n=a^k+a^{k-1}-2a$, and let $v(x)$ be the exponent of $a$ in $x$. Since $n<a^{k+1}$ we have $v(x)\le k$.
+
+\emph{The colouring.} A number with $v(x)=j\ge1$ gets colour $c_j$. For the numbers with $v(x)=0$, cut $[1,n]$ into consecutive intervals
+\[
+  I_2,\ I_3,\ \dots,\ I_{k-1},\ I_k,\ I'_{k-1},\ \dots,\ I'_3,\ I'_2,\qquad |I_j|=|I'_j|=(a-1)a^{j-1},
+\]
+and give the numbers with $v(x)=0$ in $I_j\cup I'_j$ the colour $c_j$. The total length is $2(a^{k-1}-a)+(a-1)a^{k-1}=n$, and explicitly
+\[
+  I_j=[\,a^{j-1}-a+1,\ a^j-a\,],\qquad I'_j=[\,n-a^j+a+1,\ n-a^{j-1}+a\,].
+\]
+Note that colour $c_1$ is used only for numbers with $v(x)=1$.
+
+\emph{No monochromatic solution.} Let $(x,y,z)$ be a solution of colour $c_j$, so $z=as$ and $x-y=(a-1)s$. Since $\gcd(a,a-1)=1$,
+\[
+  v(z)=1+v(s),\qquad v(x-y)=v(s).
+\]
+As $v(z)\ge1$, the colour of $z$ is $c_{v(z)}$, so $v(z)=j$ and $v(x-y)=j-1$. Each of $x,y$ has $v=j$, or $v=0$ and $j\ge2$.
+\begin{itemize}
+\item If $v(x)=v(y)=j$, then $v(x-y)\ge j$, a contradiction.
+\item If exactly one of $x,y$ has $v=0$, then $v(x-y)=0$, so $j=1$; but colour $c_1$ is not used for $v=0$.
+\item So $v(x)=v(y)=0$, $j\ge2$, and $x-y=(a-1)a^{j-1}u$ with $a\nmid u$ and $z=a^ju\le n$.
+  If $x$ and $y$ lie in the same interval of colour $c_j$, then $x-y<(a-1)a^{j-1}$, a contradiction.
+  Otherwise $j\le k-1$, $y\in I_j$, $x\in I'_j$, and
+  \[
+    x-y\ \ge\ (n-a^j+a+1)-(a^j-a)\ =\ a^k+a^{k-1}-2a^j+1 .
+  \]
+  \begin{itemize}
+  \item If $j\le k-2$: $x-y=\frac{a-1}{a}\,z\le\frac{a-1}{a}\,n<a^k-a^{k-2}\le a^k+a^{k-1}-2a^j+1$, a contradiction.
+  \item If $j=k-1$: from $a^{k-1}u=z\le n<a^{k-1}(a+1)$ we get $u\le a$, and $a\nmid u$ gives $u\le a-1$. Then $x-y\le(a-1)^2a^{k-2}<a^k-a^{k-1}+1$, a contradiction. \qedhere
+  \end{itemize}
+\end{itemize}
+\end{proof}
+For $k=3$ this construction is \cite[Lemma~4.2]{CDW22}, where equality is proved. We also checked the colouring against all solutions for $2\le a\le7$, $2\le k\le5$ (when $n\le20000$).
+
+\begin{conjecture}[H3]
+$\R_4\bigl(a(x-y)=(a-1)z\bigr)=a^4+a^3-2a+1$.
+\end{conjecture}
+This holds for $a=3$ ($103$, known), $a=4$ ($313$, by a SAT solver without proof file) and $a=5,6$ (Theorem~\ref{thm:main}). For $a=7$ the predicted value is $2731$.
+
+\clearpage
+\section{The case \texorpdfstring{$a<b$}{a<b}: a recursion and its limits}
+In \cite{Ich26b} a recursive colouring gives $\R_k\ge L_k$ with $L_2=b^2+b+1$, $L_k=b(L_{k-1}+2a)+1$ for every $k$, when $D=a^2+ab-b^2$ satisfies $D\le1$ or $a+1\le D\le 2a$ (and $a^2+(b-1)a\le b^2+b+1$). For three colours $L_3$ is the conjectured value of $\R_3$.
+\begin{conjecture}[K4]
+In the cases above, $\R_4(a,b)=b(\R_3(a,b)+2a)+1$.
+\end{conjecture}
+Evidence and limits:
+\begin{itemize}
+\item Equality holds for $(3,4)$ (Theorem~\ref{thm:main}). The recursive colouring gives the further lower bounds
+\begin{center}
+\begin{tabular}{ccccc}
+\toprule
+$\R_4(3,5)$ & $\R_4(4,7)$ & $\R_4(5,8)$ & $\R_5(3,4)$ & $\R_5(3,5)$\\
+\midrule
+$\ge961$ & $\ge3249$ & $\ge5401$ & $\ge1869$ & $\ge4836$\\
+\bottomrule
+\end{tabular}
+\end{center}
+all of which are the values $L_4$, $L_5$ predicted by the recursion.
+\item If the multiples of $a$ are fixed to the recursive pattern, the remaining constraints on the residue class $x\equiv n\pmod b$ become unsatisfiable exactly at $n=L_4$ for $(a,b)=(3,4)$, $(3,5)$, $(4,7)$, $(5,8)$, $(3,7)$ and $(4,9)$.
+\item For $(3,5)$ Lemma~\ref{lem:small} does not decide $961$: $S$ is colourable even with all multiples of $3$ included, because in $S$ the fourth colour can enter the copy $3\cdot[1,186]$ (from $m=170$ in the colouring found). That colouring does not extend to $[961]$, and all our structured searches for a colouring of $[961]$ fail. A further cube-and-conquer run on a reduced set of $479$ elements did not finish either: after splitting, every cube was either refuted within a fraction of a second or not decided within $300$ to $1800$ seconds. We expect $\R_4(3,5)=961$ but have no proof; the upper bound is open.
+\item Outside the region the recursion fails: a colouring of $[960]$ for $(4,5)$ (found by SAT with the colour depending only on the $a$-adic valuation and $\lfloor x/2\rfloor$, checked against all solutions) gives $\R_4(4,5)\ge961>941$. In this colouring the fourth colour appears in the copy from $m=156$ on.
+\item For $a=2$ the values deviate already for three colours ($\R_3(2,3)=61$, $\R_3(2,5)=181$), and $\R_4(2,3)=226\ne196$; for $(2,5)$ an explicit colouring of $[950]$ (found by SAT, checked against all solutions) gives $\R_4(2,5)\ge951$, well above the value $926$ predicted by the recursion.
+\end{itemize}
+Five colours: the method of Lemma~\ref{lem:small} did not finish for $\R_5(3,4)\le1869$ (thousands of hard cubes).
+
+\clearpage
+\section{Computing environment}
+All computations of this note ran on one desktop PC, except the search for the colouring of $[950]$ for $(2,5)$ and some other colourings of Section~4, which ran in a Linux cloud sandbox.
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{>{\raggedright}p{3.2cm}>{\raggedright\arraybackslash}p{10.4cm}}
+\toprule
+CPU & Intel Core i5-11400F (6 cores, 12 threads)\\
+Memory & 32\,GB DDR4\\
+GPU & NVIDIA GeForce RTX 3060 (not used; the SAT solvers run on the CPU)\\
+System & Windows~11 Home; solvers and proof checkers in WSL (Linux)\\
+Workers & $11$ processes for the cube search and for the proof check\\
+Cube search & MiniSat~2.2 through PySAT; cubes it could not solve quickly were tried by CaDiCaL~1.5.3 (PySAT) before splitting\\
+Proofs & CaDiCaL~3.0.1 (static build, commit \texttt{c607304}), LRAT\\
+Proof checkers & \texttt{lrat-check} (drat-trim, commit \texttt{2e3b2dc}) and \texttt{cake\_lpr} (commit \texttt{a36874a})\\
+\bottomrule
+\end{tabular}
+\end{center}
+\begin{center}
+\small
+\renewcommand{\arraystretch}{1.12}
+\begin{tabular}{lrrr}
+\toprule
+ & $461$ & $741$ & $1501$\\
+\midrule
+clauses per leaf formula & $31{,}151$--$31{,}160$ & $72{,}288$--$72{,}291$ & $191{,}958$--$191{,}964$\\
+leaf cubes, all UNSAT & $22{,}863$ & $813$ & $6{,}833$\\
+proofs accepted by \texttt{cake\_lpr} & $22{,}863$ & $813$ & $6{,}833$\\
+total size of the LRAT proofs & $196$\,GB & $24.5$\,GB & $256$\,GB\\
+cube search, first to last record & $12$\,h\,$56$\,min & $34$\,min & $3$\,h\,$9$\,min\\
+proof check, task time (sum over workers) & $34$\,h & $2$\,h & $36$\,h\\
+\bottomrule
+\end{tabular}
+\end{center}
+The runs were stopped and resumed several times, so the times in the last two rows are approximate: ``first to last record'' includes pauses, and ``task time'' is the sum of the times of the single tasks over all workers. The proofs were written to a temporary folder and deleted after checking; they can be regenerated with the published scripts.
+
+\section{Reproducibility}
+Encodings, cube trees, results of the proof checks, checkers and colourings are available at \url{https://github.com/IchiTaku326/rado-ab}. The LRAT proofs themselves are not stored (they are large); they can be regenerated with the published scripts and checked again. The checker \texttt{cake\_lpr} was compiled with heaps of $4$ and $14$\,GB.
+
+\section*{Acknowledgements and disclosure}
+Programs, computation plans, parts of the proofs and parts of the text were developed with the help of an AI assistant (Claude, Anthropic). The author is responsible for the content.
+
+\clearpage
+\begin{thebibliography}{99}
+\bibitem{AZB25} T.~Ahmed, L.~Zaman, C.~Bright, Symbolic sets for proving bounds on Rado numbers, in: Proc.\ SC-Square 2025, CEUR Workshop Proceedings 4116 (2025); arXiv:2505.12085.
+\bibitem{CDW22} Y.~Chang, J.\,A.~De Loera, W.\,J.~Wesley, Rado numbers and SAT computations, arXiv:2210.03262 (2022).
+\bibitem{HKM16} M.\,J.\,H.~Heule, O.~Kullmann, V.\,W.~Marek, Solving and verifying the Boolean Pythagorean triples problem via cube-and-conquer, \emph{SAT 2016}.
+\bibitem{Ich26a} T.~Ichikawa, The four-colour Rado number of $2(x-y)=3z$ is $226$: a cube-and-conquer computation with checked DRAT proofs, preprint, Zenodo (2026), \url{https://doi.org/10.5281/zenodo.23582301}.
+\bibitem{Ich26b} T.~Ichikawa, Rado numbers of $a(x-y)=bz$ with $a<b$: two colours, lower bounds for every number of colours, and the three-colour upper bound up to one statement, companion preprint (2026), \url{https://github.com/IchiTaku326/rado-ab}.
+\bibitem{THM21} Y.\,K.~Tan, M.\,J.\,H.~Heule, M.\,O.~Myreen, cake\_lpr: verified propagation redundancy checking in CakeML, in: \emph{TACAS 2021}, LNCS 12652, 223--241.
+\end{thebibliography}
+\end{document}

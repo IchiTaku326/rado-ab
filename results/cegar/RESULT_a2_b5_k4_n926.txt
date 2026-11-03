@@ -1,0 +1,5 @@
+R4(2(x-y)=5z), n = 926   [11-03 05:18:43 JST]
+【結果】[1,926] 全体の 4 色の良い塗り方が見つかり、全ての解で直接検査した。→ R4(2,5) > 926(証明つき)。
+  予想の値 926 は外れ。塗り方は results\c1_k4ab\cert_a2_b5_k4_n926_cegar.json。
+good 4-colouring of [1,926] found and checked: R4(2,5) > 926.
+回数 rounds: 6、計算時間の合計 total time: 0.5 h
