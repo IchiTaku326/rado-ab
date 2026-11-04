@@ -10,7 +10,7 @@ x, y, z が同じ色のもの(同じ数でもよい)が必ずある」ような�
 | 1. *Rado numbers of a(x−y)=bz with a<b*(第 2 版、21 ページ): 2 色、全ての色数の下界、3 色の上界を 1 つの予想に帰着 | `paper1/Ichikawa_Rado_numbers_with_a_less_than_b.pdf` |
 | 2. *Four-colour Rado numbers of a(x−y)=bz: seven values with checked proofs*(第 2 版、7 ページ): 4 色の値 7 つ | `paper2/Ichikawa_four-colour_Rado_numbers.pdf` |
 
-**DOI(Zenodo)**: 論文 1 https://doi.org/10.5281/zenodo.23902080 (全ての版 https://doi.org/10.5281/zenodo.23902079)、論文 2 https://doi.org/10.5281/zenodo.23933854 (第 2 版、全ての版 https://doi.org/10.5281/zenodo.23902620)、このリポジトリのリリース v1 https://doi.org/10.5281/zenodo.23902480 (後のリリースには別の DOI が付きます)。
+**DOI(Zenodo)**: 論文 1 https://doi.org/10.5281/zenodo.23935587 (第 2 版、全ての版 https://doi.org/10.5281/zenodo.23902079)、論文 2 https://doi.org/10.5281/zenodo.23933854 (第 2 版、全ての版 https://doi.org/10.5281/zenodo.23902620)、このリポジトリのリリース v1 https://doi.org/10.5281/zenodo.23902480 (後のリリースには別の DOI が付きます)。
 
 前のノート(別の記録): R₄(2(x−y)=3z) = 226、https://doi.org/10.5281/zenodo.23582301
 

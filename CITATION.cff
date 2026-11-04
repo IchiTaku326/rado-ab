@@ -12,8 +12,8 @@ identifiers:
     value: 10.5281/zenodo.23902480
     description: "This repository, release v1 (Zenodo)"
   - type: doi
-    value: 10.5281/zenodo.23902080
-    description: "Paper 1 (preprint, Zenodo)"
+    value: 10.5281/zenodo.23935587
+    description: "Paper 1 (preprint, Zenodo, version 2; all versions: 10.5281/zenodo.23902079)"
   - type: doi
     value: 10.5281/zenodo.23902621
     description: "Paper 2 (preprint, Zenodo, all versions: 10.5281/zenodo.23902620)"
