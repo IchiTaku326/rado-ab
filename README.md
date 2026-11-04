@@ -7,12 +7,12 @@ with k colours contains a monochromatic solution of `a(x − y) = bz` (x, y, z n
 
 | Paper | File |
 |---|---|
-| 1. *Rado numbers of a(x−y)=bz with a<b: two colours, lower bounds for every number of colours, and the three-colour upper bound up to one statement* (21 pages) | `paper1/Ichikawa_Rado_numbers_with_a_less_than_b.pdf` |
+| 1. *Rado numbers of a(x−y)=bz with a<b: two colours, lower bounds for every number of colours, and the three-colour upper bound up to one statement* (version 2, 21 pages) | `paper1/Ichikawa_Rado_numbers_with_a_less_than_b.pdf` |
 | 2. *Four-colour Rado numbers of a(x−y)=bz: seven values with checked proofs* (version 2, 7 pages) | `paper2/Ichikawa_four-colour_Rado_numbers.pdf` |
 
 **DOIs (Zenodo):**
-paper 1: https://doi.org/10.5281/zenodo.23902080 ·
-paper 2: version 1 https://doi.org/10.5281/zenodo.23902621, all versions https://doi.org/10.5281/zenodo.23902620 ·
+paper 1: version 1 https://doi.org/10.5281/zenodo.23902080, all versions https://doi.org/10.5281/zenodo.23902079 ·
+paper 2: version 2 https://doi.org/10.5281/zenodo.23933854, all versions https://doi.org/10.5281/zenodo.23902620 ·
 this repository, release v1: https://doi.org/10.5281/zenodo.23902480
 (later releases get their own DOIs; all versions are listed on the Zenodo record page).
 

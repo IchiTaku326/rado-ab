@@ -32,7 +32,7 @@
 \large two colours, lower bounds for every number of colours,\\
 and the three-colour upper bound up to one statement}
 \author{Takumi Ichikawa\\ \small\texttt{github.com/IchiTaku326}}
-\date{Version 1, 3 November 2026\\ \small (preprint, not peer reviewed)}
+\date{Version 2, 4 November 2026\\ \small (preprint, not peer reviewed; version 1: 3 November 2026)}
 
 \begin{document}
 \maketitle
@@ -356,7 +356,7 @@ It is natural to ask:
 \begin{conjecture}[question]\label{conj:growth}
 For coprime $a,b\ge2$, $a\ne b$: is $\ \lim_{k\to\infty}\R_k(a,b)^{1/k}=\max(a,b)$?
 \end{conjecture}
-So only the upper half is open. For the Schur equation $x-y=z$ ($a=b=1$) the growth rate is not known; the best bounds are roughly $3.28^k\lesssim S(k)\le e\,k!$. For $a\ne b$ the coefficients seem to determine it. The known four-colour values agree: $\R_4=a^4$ for $(a,b)=(3,1),(4,1),(5,1)$ \cite[Table~10]{CDW22} and $(5,2),(5,3)$ (our SAT computations, without proof files), and $\R_4(3,4)=461\approx1.80\cdot4^4$. However, the exact formula $\R_k=a^k$ does not persist: we found a good $5$-colouring of $[243]$ for $3(x-y)=z$ (checked against all solutions), so $\R_5\bigl(3(x-y)=z\bigr)>243=3^5$. In fact $\R_5\bigl(3(x-y)=z\bigr)>320$ (an explicit colouring of $[320]$, checked; in all good $5$-colourings we found, the numbers with $v_3(x)=1$ form one colour class), so the ratio $\R_5/\R_4$ is at least $3.95$ for $3(x-y)=z$, compared with $\R_2/\R_1=\R_3/\R_2=\R_4/\R_3=3$. Similarly for $3(x-y)=2z$ the ratios are $\R_3/\R_2=3.44$, $\R_4/\R_3=3.32$ and $\R_5/\R_4\ge3.87$ (from $\R_4=103$ and $\R_5\ge399$, an explicit colouring of $[398]$, checked against all solutions). These ratios do not yet decrease towards $3$, so the answer to the question above may well be negative for $a>b$; the data are too few to decide. The best general upper bound we know is due to Sanders \cite{San26}, who proved $\R_k(a,b)\le\exp\bigl(k^{2+o(1)}\bigr)$ for fixed $a,b$ (for the equation $ax-ay=bz$, i.e.\ exactly our family); we know no upper bound of the form $C^k$.
+So only the upper half is open. For the Schur equation $x-y=z$ ($a=b=1$) the growth rate is not known; the best bounds are roughly $3.28^k\lesssim S(k)\le e\,k!$. For $a\ne b$ the coefficients seem to determine it. The known four-colour values agree: $\R_4=a^4$ for $(a,b)=(3,1),(4,1),(5,1)$ \cite[Table~10]{CDW22} and $(5,2),(5,3)$ (with checked proofs, \cite{Ich26b}), and $\R_4(3,4)=461\approx1.80\cdot4^4$. However, the exact formula $\R_k=a^k$ does not persist: we found a good $5$-colouring of $[243]$ for $3(x-y)=z$ (checked against all solutions), so $\R_5\bigl(3(x-y)=z\bigr)>243=3^5$. In fact $\R_5\bigl(3(x-y)=z\bigr)>320$ (an explicit colouring of $[320]$, checked; in all good $5$-colourings we found, the numbers with $v_3(x)=1$ form one colour class), so the ratio $\R_5/\R_4$ is at least $3.95$ for $3(x-y)=z$, compared with $\R_2/\R_1=\R_3/\R_2=\R_4/\R_3=3$. Similarly for $3(x-y)=2z$ the ratios are $\R_3/\R_2=3.44$, $\R_4/\R_3=3.32$ and $\R_5/\R_4\ge3.87$ (from $\R_4=103$ and $\R_5\ge399$, an explicit colouring of $[398]$, checked against all solutions), and for $4(x-y)=3z$ we have $\R_4=313$ and $\R_5\ge1401$ \cite{Ich26b}, so $\R_5/\R_4\ge4.47>4$. These ratios do not yet decrease towards $3$, so the answer to the question above may well be negative for $a>b$; the data are too few to decide. The best general upper bound we know is due to Sanders \cite{San26}, who proved $\R_k(a,b)\le\exp\bigl(k^{2+o(1)}\bigr)$ for fixed $a,b$ (for the equation $ax-ay=bz$, i.e.\ exactly our family); we know no upper bound of the form $C^k$.
 
 \paragraph{Density.} Each colour class is a solution-free set, and such sets can be very large.
 \begin{proposition}\label{prop:density}
@@ -709,6 +709,8 @@ We list what we could not prove, in order of importance for this paper.
 \item Explain why the norm form $D=\mathrm N(a+b\phi)$ of the golden-ratio field governs the colourings (Section~\ref{sec:norm}).
 \end{enumerate}
 
+\paragraph{Changes in version 2.} Only the paragraph ``Growth in $k$'' of Section~\ref{sec:rec} (the four-colour values for $(5,2)$, $(5,3)$ now have checked proofs, and the bound $\R_5(4(x-y)=3z)\ge1401$ is added) and the reference \cite{Ich26b} changed. All theorems and proofs are unchanged.
+
 \section*{Acknowledgements and disclosure}
 Programs, computation plans, parts of the proofs and parts of the text were developed with the help of an AI assistant (Claude, Anthropic). All proofs were checked by the author, and all computational claims can be reproduced with the published programs. The author is responsible for the content.
 
@@ -721,7 +723,7 @@ Programs, computation plans, parts of the proofs and parts of the text were deve
 \bibitem{GMT12} W.~Gasarch, R.~Moriarty, N.~Tumma, New upper and lower bounds on the Rado numbers, arXiv:1206.4885 (2012).
 \bibitem{GJ92} D.~Greenwell, P.\,D.~Johnson, Jr., Forbidding prescribed distances for designated colors, \emph{Geombinatorics} \textbf{2} (1992), no.~1, 13--16.
 \bibitem{Ich26a} T.~Ichikawa, The four-colour Rado number of $2(x-y)=3z$ is $226$: a cube-and-conquer computation with checked DRAT proofs, preprint, Zenodo (2026), \url{https://doi.org/10.5281/zenodo.23582301}.
-\bibitem{Ich26b} T.~Ichikawa, Four-colour Rado numbers of $a(x-y)=bz$: $\R_4(3(x-y)=4z)=461$, $\R_4(5(x-y)=4z)=741$, $\R_4(6(x-y)=5z)=1501$, companion preprint (2026), \url{https://github.com/IchiTaku326/rado-ab}.
+\bibitem{Ich26b} T.~Ichikawa, Four-colour Rado numbers of $a(x-y)=bz$: seven values with checked proofs, companion preprint, Zenodo (2026), version~2, \url{https://doi.org/10.5281/zenodo.23902620}.
 \bibitem{Rado33} R.~Rado, Studien zur Kombinatorik, \emph{Math.\ Z.} \textbf{36} (1933), 424--470.
 \bibitem{Ruz93} I.\,Z.~Ruzsa, Solving a linear equation in a set of integers~I, \emph{Acta Arith.} \textbf{65} (1993), 259--282.
 \bibitem{San26} T.~Sanders, On Rado's single equation theorem, arXiv:2603.18179 (2026).
