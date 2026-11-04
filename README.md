@@ -8,11 +8,11 @@ with k colours contains a monochromatic solution of `a(x − y) = bz` (x, y, z n
 | Paper | File |
 |---|---|
 | 1. *Rado numbers of a(x−y)=bz with a<b: two colours, lower bounds for every number of colours, and the three-colour upper bound up to one statement* (21 pages) | `paper1/Ichikawa_Rado_numbers_with_a_less_than_b.pdf` |
-| 2. *Four-colour Rado numbers of a(x−y)=bz: R₄(3(x−y)=4z)=461, R₄(5(x−y)=4z)=741, R₄(6(x−y)=5z)=1501* (6 pages) | `paper2/Ichikawa_four-colour_Rado_numbers_461_741_1501.pdf` |
+| 2. *Four-colour Rado numbers of a(x−y)=bz: seven values with checked proofs* (version 2, 7 pages) | `paper2/Ichikawa_four-colour_Rado_numbers.pdf` |
 
 **DOIs (Zenodo):**
 paper 1: https://doi.org/10.5281/zenodo.23902080 ·
-paper 2: https://doi.org/10.5281/zenodo.23902621 ·
+paper 2: version 1 https://doi.org/10.5281/zenodo.23902621, all versions https://doi.org/10.5281/zenodo.23902620 ·
 this repository, release v1: https://doi.org/10.5281/zenodo.23902480
 (later releases get their own DOIs; all versions are listed on the Zenodo record page).
 
@@ -37,6 +37,8 @@ N(a,b) = min(am′, M+ab+1). Main region: a²+(b−1)a ≤ b²+b+1 (there N = b(
 | R₃(a,b) = N(a,b) for all pairs with b ≤ 60, except R₃(2,3) = 61 and R₃(2,5) = 181 | upper bounds: LRAT proofs for all 1041 pairs except (2,3), checked by `lrat-check` and `cake_lpr`; (2,3) is a small computation |
 | the same for all 1939 pairs with b ≤ 81 | SAT solver only (MiniSat, no proof files) |
 | R₄(3,4) = 461, R₄(5,4) = 741, R₄(6,5) = 1501 | colouring + cube-and-conquer, every leaf proof checked by `cake_lpr` (paper 2) |
+| R₄(4(x−y)=3z) = 313, R₄(5(x−y)=2z) = R₄(5(x−y)=3z) = 625, R₄(x−y=5z) = 2001 | the same (paper 2, version 2) |
+| R₅(4(x−y)=3z) ≥ 1401: the formula of Conjecture H3 (1273) fails for five colours | explicit colouring, checked |
 | R₄(3,5) ≥ 961, R₄(2,5) ≥ 951, R₄(4,5) ≥ 961, R₅(3,4) ≥ 1869, R₅(3(x−y)=2z) ≥ 399 | explicit colourings, checked |
 | R₄(3,5) = 961? | **open** (our searches did not finish) |
 | growth of R_k in k (exponential?) | **open**; best upper bound known to us: Sanders 2026, exp(k^{2+o(1)}) |
@@ -64,7 +66,7 @@ Ubuntu 24.04 (Python 3.13, numpy 2.5), with the binaries built from source as in
 | `0_check_lower_bounds` | all lower-bound colourings of both papers, by an independent checker (`tools/check_lower_bounds.py`) | seconds | `ALL GOOD` |
 | `1_check_family_proof` | the LRAT proof for R₃(a,a+1) ≤ N, a ≥ 28 (`results/sym_j1/`), with `lrat-check` and `cake_lpr` | about a minute | `c VERIFIED`, `s VERIFIED UNSAT` |
 | `2_check_three_colour_proofs` | regenerates and checks the 1041 three-colour proofs (b ≤ 60) | about a day; b = 57…60 need `cake_lpr` with a 14 GB heap | `results/proofcheck_subset_FINAL.txt`: 1041/1041 cells VERIFIED, rows `VERIFIED_CAKE` |
-| `3_check_four_colour_proofs` | completeness of the cube trees and a checked proof for every leaf (461, 741, 1501) | many hours | tree complete YES; 22863, 813, 6833 cubes VERIFIED |
+| `3_check_four_colour_proofs` | completeness of the cube trees and a checked proof for every leaf (461, 741, 1501, 313, 625, 625, 2001) | about two days | last line of `results/proofcheck_subset_FINAL.txt`: tree complete YES; per job k4_3_4_461 22863/22863, k4_5_4_741 813/813, k4_6_5_1501 6833/6833, k4_4_3_313 715/715, k4_5_2_625 715/715, k4_5_3_625 715/715, k4_1_5_2001 3438/3438 VERIFIED |
 | `4_lemma_S_checks` | the base case and the steps of the lower part of Conjecture S, b ≤ 30 | about 2 hours | base case: SAT only for (2,3) and (2,5); steps: NOT_FORCED only for (2,3) |
 | `5_build_papers` | builds both PDFs (LaTeX with latexmk; or upload `main.tex` to Overleaf) | seconds | |
 
@@ -92,6 +94,7 @@ Optional: `python3 tools/sym_family.py 1 10 10 12 60` regenerates the family for
 paper1/, paper2/    LaTeX source, figure, PDF
 tools/              all programs of the project (research/ = exploratory scripts; some contain paths of the machine they ran on)
                     check_lower_bounds.py   independent checker of all lower bounds (written for this release)
+                    research/lower_search2.py  search for good colourings above a formula (five colours, paper 2)
                     verify_subset.py        regenerates the small-set CNFs, runs CaDiCaL --lrat, lrat-check and cake_lpr
                     subset_cubes.py         cube-and-conquer search on the small set (produced results/subset_cubes.csv)
                     sym_family.py           symbolic family proof for b = a+1 (produced results/sym_j1/)

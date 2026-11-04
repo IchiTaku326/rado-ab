@@ -8,9 +8,9 @@ x, y, z が同じ色のもの(同じ数でもよい)が必ずある」ような�
 | 論文 | ファイル |
 |---|---|
 | 1. *Rado numbers of a(x−y)=bz with a<b*(21 ページ): 2 色、全ての色数の下界、3 色の上界を 1 つの予想に帰着 | `paper1/Ichikawa_Rado_numbers_with_a_less_than_b.pdf` |
-| 2. *Four-colour Rado numbers of a(x−y)=bz*(6 ページ): R₄ = 461, 741, 1501 | `paper2/Ichikawa_four-colour_Rado_numbers_461_741_1501.pdf` |
+| 2. *Four-colour Rado numbers of a(x−y)=bz: seven values with checked proofs*(第 2 版、7 ページ): 4 色の値 7 つ | `paper2/Ichikawa_four-colour_Rado_numbers.pdf` |
 
-**DOI(Zenodo)**: 論文 1 https://doi.org/10.5281/zenodo.23902080 、論文 2 https://doi.org/10.5281/zenodo.23902621 、このリポジトリのリリース v1 https://doi.org/10.5281/zenodo.23902480 (後のリリースには別の DOI が付きます)。
+**DOI(Zenodo)**: 論文 1 https://doi.org/10.5281/zenodo.23902080 、論文 2 https://doi.org/10.5281/zenodo.23902621 (全ての版 https://doi.org/10.5281/zenodo.23902620)、このリポジトリのリリース v1 https://doi.org/10.5281/zenodo.23902480 (後のリリースには別の DOI が付きます)。
 
 前のノート(別の記録): R₄(2(x−y)=3z) = 226、https://doi.org/10.5281/zenodo.23582301
 
@@ -30,6 +30,8 @@ x, y, z が同じ色のもの(同じ数でもよい)が必ずある」ような�
 | b ≤ 60 の全ての組で R₃ = N(a,b)(R₃(2,3) = 61、R₃(2,5) = 181 を除く) | (2,3) 以外の 1041 組の上界を LRAT 証明で、`lrat-check` と `cake_lpr` で検査 |
 | b ≤ 81 の全 1939 組で同じ | SAT ソルバーのみ(MiniSat) |
 | R₄(3,4) = 461、R₄(5,4) = 741、R₄(6,5) = 1501 | 塗り方 + 分割探索、全ての葉の証明を `cake_lpr` で検査(論文 2) |
+| R₄(4(x−y)=3z) = 313、R₄(5(x−y)=2z) = R₄(5(x−y)=3z) = 625、R₄(x−y=5z) = 2001 | 同じ方法(論文 2 の第 2 版) |
+| R₅(4(x−y)=3z) ≥ 1401(予想 H3 の式 1273 は 5 色で壊れる) | 具体的な塗り方を検査 |
 | R₄(3,5) ≥ 961、R₄(2,5) ≥ 951、R₄(4,5) ≥ 961、R₅(3,4) ≥ 1869、R₅(3(x−y)=2z) ≥ 399 | 具体的な塗り方を検査 |
 | R₄(3,5) = 961 か | **未解決**(探索が終わらない) |
 | k に対する増え方 | **未解決**(上界は Sanders 2026 の exp(k^{2+o(1)})) |
@@ -44,7 +46,7 @@ x, y, z が同じ色のもの(同じ数でもよい)が必ずある」ような�
 - `0_check_lower_bounds`: 両論文の下界の塗り方を全て、独立のプログラムで検査(数秒、`ALL GOOD` になるはず)
 - `1_check_family_proof`: R₃(a,a+1) ≤ N(a ≥ 28)の LRAT 証明を `lrat-check` と `cake_lpr` で検査(約 1 分)
 - `2_check_three_colour_proofs`: b ≤ 60 の 3 色の 1041 個の証明を作り直して検査(約 1 日。b = 57〜60 はヒープ 14 GB の `cake_lpr` が必要)
-- `3_check_four_colour_proofs`: 461・741・1501 の分割の木の網羅と全ての葉の証明(数時間以上)
+- `3_check_four_colour_proofs`: 461・741・1501・313・625・625・2001 の分割の木の網羅と全ての葉の証明(2 日ほど)
 - `4_lemma_S_checks`: 予想 S の下の部分(始まりと各歩)、b ≤ 30(約 2 時間)
 - `5_build_papers`: 2 本の PDF を作る
 

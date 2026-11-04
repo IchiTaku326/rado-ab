@@ -10,3 +10,4 @@
 [2026-11-02 19:55:38] (A) tree complete YES; R4(5,4)=741: 0/0 cubes VERIFIED; R4(6,5)=1501: 0/0 cubes VERIFIED | (B) 3 colours b <= 41: 0/0 cells VERIFIED
 [2026-11-02 20:04:38] (A) tree complete YES; R4(5,4)=741: 813/813 cubes VERIFIED; R4(6,5)=1501: 6833/6833 cubes VERIFIED | (B) 3 colours b <= 60: 1041/1041 cells VERIFIED
 [2026-11-02 20:04:39] (A) tree complete YES; R4(5,4)=741: 813/813 cubes VERIFIED; R4(6,5)=1501: 6833/6833 cubes VERIFIED | (B) 3 colours b <= 60: 1041/1041 cells VERIFIED
+[2026-11-03 20:09:21] (A) tree complete YES; R4(5,4)=741: 0/0 cubes VERIFIED; R4(6,5)=1501: 0/0 cubes VERIFIED | (B) 3 colours b <= 41: 0/0 cells VERIFIED | per job: k4_4_3_313: 715/715 VERIFIED; k4_5_2_625: 715/715 VERIFIED; k4_5_3_625: 715/715 VERIFIED; k4_1_5_2001: 3438/3438 VERIFIED

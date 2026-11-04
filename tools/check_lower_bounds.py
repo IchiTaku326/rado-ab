@@ -97,6 +97,28 @@ def H3(a, k):
     return col
 
 
+def valuation(a, k):
+    """colour = exponent of a in x, on [1, a^k - 1] (R_k >= a^k, Chang-De Loera-Wesley Lemma 4.1)"""
+    col = [-1]
+    for x in range(1, a ** k):
+        v = 0
+        while x % a == 0:
+            x //= a; v += 1
+        col.append(v)
+    return col
+
+
+def blocks_a1(b, k):
+    """x - y = b z (a = 1): good colouring of [1, N_k], N_1 = b, N_k = (b+2) N_(k-1) + b, built from two copies of the
+    (k-1)-colouring (bottom and top) and the new colour on the middle block of length b (N_(k-1) + 1)."""
+    col = [-1] + [0] * b
+    for kk in range(2, k + 1):
+        Np = len(col) - 1
+        mid = b * (Np + 1)
+        col = col + [kk - 1] * mid + col[1:]
+    return col
+
+
 def main():
     bmax3 = int(sys.argv[1]) if len(sys.argv) > 1 else 34
     fails = 0
@@ -141,6 +163,13 @@ def main():
             if bad:
                 print(f"   FAIL a={a} k={k}: {bad}"); fails += 1
     print("   2 <= a <= 7, 2 <= k <= 5, n <= 20000 checked")
+
+    print("5. four-colour lower bounds of the values 313, 625, 625, 2001 (paper 2, version 2)")
+    for a, b, k, col, name in [(4, 3, 4, H3(4, 4), "Theorem 3.1 of paper 2"), (5, 2, 4, valuation(5, 4), "valuation colouring"),
+                               (5, 3, 4, valuation(5, 4), "valuation colouring"), (1, 5, 4, blocks_a1(5, 4), "block construction")]:
+        bad = bad_solutions(a, b, col)
+        print(f"   {a}(x-y)={b}z, {k} colours, {name}, [1,{len(col) - 1}]: monochromatic={bad} -> R_{k} >= {len(col)} {'OK' if bad == 0 else 'FAIL'}")
+        fails += bad != 0
 
     print("ALL GOOD" if fails == 0 else f"{fails} FAILURES")
     sys.exit(1 if fails else 0)

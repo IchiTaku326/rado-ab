@@ -10,7 +10,7 @@
 \usepackage[expansion=false]{microtype}
 \usepackage{url}
 \usepackage[margin=2.6cm]{geometry}
-\usepackage[pdftitle={Four-colour Rado numbers of a(x-y)=bz},pdfauthor={Takumi Ichikawa},colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
+\usepackage[pdftitle={Four-colour Rado numbers of a(x-y)=bz: seven values with checked proofs},pdfauthor={Takumi Ichikawa},colorlinks=true,linkcolor=blue!50!black,citecolor=blue!50!black,urlcolor=blue!50!black]{hyperref}
 
 \newtheorem{theorem}{Theorem}[section]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -27,14 +27,14 @@
 \setlist{itemsep=2pt,topsep=4pt}
 \allowdisplaybreaks
 
-\title{Four-colour Rado numbers of $a(x-y)=bz$:\\[4pt]\large $\R_4\bigl(3(x-y)=4z\bigr)=461$, $\ \R_4\bigl(5(x-y)=4z\bigr)=741$,\\ $\R_4\bigl(6(x-y)=5z\bigr)=1501$}
+\title{Four-colour Rado numbers of $a(x-y)=bz$:\\[4pt]\large seven values with checked proofs}
 \author{Takumi Ichikawa\\ \small\texttt{github.com/IchiTaku326}}
-\date{Version 1, 3 November 2026 \\ \small (preprint, not peer reviewed)}
+\date{Version 2, 4 November 2026 \\ \small (preprint, not peer reviewed; version 1: 3 November 2026)}
 \begin{document}
 \maketitle
 \begin{abstract}
 Let $\R_k(a,b)$ be the least $n$ such that every $k$-colouring of $\{1,\dots,n\}$ has a monochromatic solution of $a(x-y)=bz$ ($\gcd(a,b)=1$).
-We determine three new four-colour values, $\R_4(3,4)=461$, $\R_4(5,4)=741$ and $\R_4(6,5)=1501$. The lower bounds are explicit colourings (one of them from a family proved for every number of colours), the upper bounds are SAT computations on a small subset of $[n]$ split by cube-and-conquer, with every proof checked by the formally verified checker \texttt{cake\_lpr}. We also prove $\R_k(a(x-y)=(a-1)z)\ge a^k+a^{k-1}-2a+1$ for all $k,a\ge2$, conjecture equality for $k=4$ (true for $a=3,4,5,6$; for $a=4$ only by a SAT solver without proof file), and collect lower bounds and evidence on a conjectured recursion $\R_4=b(\R_3+2a)+1$ for $a<b$.
+We determine seven four-colour values: $\R_4=461$, $741$ and $1501$ for $3(x-y)=4z$, $5(x-y)=4z$ and $6(x-y)=5z$, $\R_4=313$ for $4(x-y)=3z$, $\R_4=625$ for $5(x-y)=2z$ and for $5(x-y)=3z$, and $\R_4=2001$ for $x-y=5z$, none of which we found in the literature. The lower bounds are explicit colourings, each from a construction that works for every number of colours; the upper bounds are SAT computations on a small subset of $[n]$ split by cube-and-conquer, with every proof checked by the formally verified checker \texttt{cake\_lpr}. We prove $\R_k(a(x-y)=(a-1)z)\ge a^k+a^{k-1}-2a+1$ for all $k,a\ge2$; equality holds for $k=4$ and $a=3,4,5,6$, but fails for $k=5$ and $a=3,4$ ($\R_5(4(x-y)=3z)\ge1401>1273$). We also collect lower bounds and evidence on a conjectured recursion $\R_4=b(\R_3+2a)+1$ for $a<b$.
 \end{abstract}
 
 \section{Introduction}
@@ -49,7 +49,17 @@ Known four-colour values include $\R_4(1,1)=45$ (one more than the Schur number 
   \R_4\bigl(3(x-y)=4z\bigr)=461,\qquad \R_4\bigl(5(x-y)=4z\bigr)=741,\qquad \R_4\bigl(6(x-y)=5z\bigr)=1501 .
 \]
 \end{theorem}
-For each value, the lower bound is an explicit colouring of $[n-1]$ (Section~\ref{sec:lower}) and the upper bound is a computer proof that every colouring of $[n]$ fails (Section~\ref{sec:method}).
+\begin{theorem}\label{thm:main2}
+\[
+\begin{gathered}
+  \R_4\bigl(4(x-y)=3z\bigr)=313,\qquad \R_4\bigl(5(x-y)=2z\bigr)=625,\\
+  \R_4\bigl(5(x-y)=3z\bigr)=625,\qquad \R_4\bigl(x-y=5z\bigr)=2001 .
+\end{gathered}
+\]
+\end{theorem}
+For each value, the lower bound is an explicit colouring of $[n-1]$ (Section~\ref{sec:lower}) and the upper bound is a computer proof that every colouring of $[n]$ fails (Section~\ref{sec:method}). None of the seven values is in Table~10 of \cite{CDW22}, and we did not find them elsewhere. The values of Theorem~\ref{thm:main2} were first found by us with a SAT solver alone; version~2 of this note adds the checked proofs. They agree with the patterns $\R_4=a^4$ for $a\ge b+2$ (known for $(3,1)$, $(4,1)$, $(5,1)$ \cite{CDW22}), with Conjecture~H3 below, and with $\R_4(x-y=(m-2)z)=m^4-m^3-m^2-m-1$, which \cite{CDW22} found for $4\le m\le6$; here $m=7$.
+
+\paragraph{Changes in version 2.} New: Theorem~\ref{thm:main2} with checked proofs, Proposition~\ref{prop:blocks}, the five-colour bounds in Section~\ref{sec:lower}, the second table of Section~\ref{sec:env}, the title. Everything else is unchanged.
 
 \clearpage
 \section{Upper bounds: method}\label{sec:method}
@@ -83,16 +93,21 @@ equation & $n$ & $K=\R_3$ & leaf cubes & checked by \texttt{cake\_lpr}\\
 $3(x-y)=4z$ & $461$ & $109$ & $22863$ & all\\
 $5(x-y)=4z$ & $741$ & $141$ & $813$ & all\\
 $6(x-y)=5z$ & $1501$ & $241$ & $6833$ & all\\
+\midrule
+$4(x-y)=3z$ & $313$ & $73$ & $715$ & all\\
+$5(x-y)=2z$ & $625$ & $125$ & $715$ & all\\
+$5(x-y)=3z$ & $625$ & $125$ & $715$ & all\\
+$x-y=5z$ & $2001$ & $286$ & $3438$ & all\\
 \bottomrule
 \end{tabular}
 \end{center}
-Here $\R_3(3,4)=109=b(b^2+b+2a+1)+1$ \cite{AZB25,Ich26b}, and $\R_3(5,4)=141$, $\R_3(6,5)=241$ are the values $a^3+(a-1)^2$ of \cite{CDW22}.
+Here $\R_3(3,4)=109=b(b^2+b+2a+1)+1$ \cite{AZB25,Ich26b}; $\R_3(5,4)=141$, $\R_3(6,5)=241$, $\R_3(4,3)=73$ are the values $a^3+(a-1)^2$, $\R_3(5,2)=\R_3(5,3)=125$ the values $a^3$ ($a\ge b+2$), and $\R_3(x-y=5z)=286$ the value $m^3-m^2-m-1$ with $m=7$, all from \cite{CDW22}.
 
 \clearpage
 \section{Lower bounds}\label{sec:lower}
 \paragraph{The value $461$.} The recursive colouring of \cite[Lemma~4.1 and Theorem~4.5]{Ich26b} for $(a,b)=(3,4)$ and $k=4$ colours $[460]$ without monochromatic solutions. We also checked this colouring against all solutions.
 
-\paragraph{The values $741$ and $1501$.} They are the case $k=4$, $a=5,6$ of the following theorem.
+\paragraph{The values $313$, $741$ and $1501$.} They are the case $k=4$, $a=4,5,6$ of the following theorem.
 
 \begin{theorem}\label{thm:H3}
 For all $k\ge2$ and $a\ge2$:\quad $\R_k\bigl(a(x-y)=(a-1)z\bigr)\ge a^k+a^{k-1}-2a+1$.
@@ -136,7 +151,27 @@ For $k=3$ this construction is \cite[Lemma~4.2]{CDW22}, where equality is proved
 \begin{conjecture}[H3]
 $\R_4\bigl(a(x-y)=(a-1)z\bigr)=a^4+a^3-2a+1$.
 \end{conjecture}
-This holds for $a=3$ ($103$, known), $a=4$ ($313$, by a SAT solver without proof file) and $a=5,6$ (Theorem~\ref{thm:main}). For $a=7$ the predicted value is $2731$.
+This holds for $a=3$ ($103$, \cite{CDW22}) and $a=4,5,6$ (Theorems~\ref{thm:main} and~\ref{thm:main2}). For $a=7$ the predicted value is $2731$. The analogous statement for five colours is false: explicit colourings (found by SAT and checked against all solutions) give
+\[
+  \R_5\bigl(3(x-y)=2z\bigr)\ge399>319,\qquad \R_5\bigl(4(x-y)=3z\bigr)\ge1401>1273,
+\]
+where $319$ and $1273$ are the values of Theorem~\ref{thm:H3} for $k=5$. In the colouring of $[1400]$ the numbers with $v(x)=1$ form one colour class, but the other colours are not determined by $v(x)$.
+
+\paragraph{The values $625$.} For coprime $a,b$ the colouring of $[a^k-1]$ by the exponent of $a$ is good, so $\R_k(a,b)\ge a^k$ \cite[Lemma~4.1]{CDW22}; for $a=5$, $k=4$ this gives $625$. For $a\ge b+2$, \cite{CDW22} proved $\R_3=a^3$, and their Table~10 has $\R_4=a^4$ for $(3,1)$, $(4,1)$, $(5,1)$; Theorem~\ref{thm:main2} adds $(5,2)$ and $(5,3)$. Again five colours break the pattern: $\R_5(3(x-y)=z)>320>3^5$ \cite{Ich26b}. For $4(x-y)=z$ we searched for a $5$-colouring of $[1024]$ and did not find one (this is not an upper bound).
+
+\paragraph{The value $2001$.} It comes from the following construction, which we include for completeness; it is a simple product construction and is probably known.
+\begin{proposition}\label{prop:blocks}
+Let $b\ge1$, $N_1=b$ and $N_k=(b+2)N_{k-1}+b$. Then $\R_k(x-y=bz)\ge N_k+1=\dfrac{b(b+2)^k+1}{b+1}$ for every $k\ge1$.
+\end{proposition}
+\begin{proof}
+For $k=1$, colour $[1,b]$ with one colour: a solution needs $x-y=bz\ge b$, so $x\ge b+1$. Let $C$ be a good $(k-1)$-colouring of $[1,N]$, $N=N_{k-1}$, put $s=(b+1)N+b$ and $n=s+N=N_k$, and colour $[1,n]$ as follows: $x\le N$ gets $C(x)$; the middle block $B=[N+1,s]$ gets a new colour; $x>s$ gets $C(x-s)$. Let $(x,y,z)$ be a monochromatic solution, $x-y=bz$, $x>y$.
+\begin{itemize}
+\item New colour: $x,y,z\in B$, so $z\ge N+1$ and $x-y\ge b(N+1)=|B|$, impossible.
+\item $z>s$: then $bz\le x-y\le n-1=s+N-1$ forces $b=1$ (for $b\ge2$, $bz\ge2s+2>s+N$). Then $y=x-z\le N-1$ is in the bottom copy and $x>z>s$ in the top copy, and $(x-s)-y=z-s$ is a monochromatic solution for $C$.
+\item $z\le N$: if $x,y$ are in the same copy, shifting them gives a monochromatic solution for $C$. If $y\le N$ and $x>s$, then $x-y\ge s+1-N=bN+b+1>bz$. \qedhere
+\end{itemize}
+\end{proof}
+For $b=5$, $k=4$ this is $2001$. With $m=b+2$ the bound reads $((m-2)m^k+1)/(m-1)$; for $k=3$ it is the value $m^3-m^2-m-1$ proved in \cite{CDW22}, and for $k=4$ it is $m^4-m^3-m^2-m-1$. For $b=1$ (Schur numbers) it is the classical bound $(3^k+1)/2$, which is not sharp for $k=4$ ($\R_4=45$). For $x-y=2z$ we searched for a $5$-colouring of $[683]$ (one more than $N_5=682$) and did not find one (this is not an upper bound).
 
 \clearpage
 \section{The case \texorpdfstring{$a<b$}{a<b}: a recursion and its limits}
@@ -165,11 +200,11 @@ all of which are the values $L_4$, $L_5$ predicted by the recursion.
 Five colours: the method of Lemma~\ref{lem:small} did not finish for $\R_5(3,4)\le1869$ (thousands of hard cubes).
 
 \clearpage
-\section{Computing environment}
-All computations of this note ran on one desktop PC, except the search for the colouring of $[950]$ for $(2,5)$ and some other colourings of Section~4, which ran in a Linux cloud sandbox.
+\section{Computing environment}\label{sec:env}
+All computations of this note ran on one desktop PC, except the search for the colouring of $[950]$ for $(2,5)$ and some other colourings of Section~4, which ran in a Linux cloud sandbox. The five-colour searches of Section~\ref{sec:lower} used CaDiCaL~3.0.1 on cubes of the first $6$ free numbers, at most $300$ seconds per cube.
 \begin{center}
-\small
-\renewcommand{\arraystretch}{1.12}
+\footnotesize
+\renewcommand{\arraystretch}{1.0}
 \begin{tabular}{>{\raggedright}p{3.2cm}>{\raggedright\arraybackslash}p{10.4cm}}
 \toprule
 CPU & Intel Core i5-11400F (6 cores, 12 threads)\\
@@ -184,8 +219,8 @@ Proof checkers & \texttt{lrat-check} (drat-trim, commit \texttt{2e3b2dc}) and \t
 \end{tabular}
 \end{center}
 \begin{center}
-\small
-\renewcommand{\arraystretch}{1.12}
+\footnotesize
+\renewcommand{\arraystretch}{1.0}
 \begin{tabular}{lrrr}
 \toprule
  & $461$ & $741$ & $1501$\\
@@ -199,10 +234,26 @@ proof check, task time (sum over workers) & $34$\,h & $2$\,h & $36$\,h\\
 \bottomrule
 \end{tabular}
 \end{center}
-The runs were stopped and resumed several times, so the times in the last two rows are approximate: ``first to last record'' includes pauses, and ``task time'' is the sum of the times of the single tasks over all workers. The proofs were written to a temporary folder and deleted after checking; they can be regenerated with the published scripts.
+\begin{center}
+\footnotesize
+\renewcommand{\arraystretch}{1.0}
+\begin{tabular}{lrrrr}
+\toprule
+ & $313$ & $625$, $b=2$ & $625$, $b=3$ & $2001$\\
+\midrule
+clauses per leaf formula & $22{,}266$ & $130{,}288$ & $79{,}005$ & $325{,}818$--$325{,}824$\\
+leaf cubes, all UNSAT & $715$ & $715$ & $715$ & $3{,}438$\\
+proofs accepted by \texttt{cake\_lpr} & $715$ & $715$ & $715$ & $3{,}438$\\
+total size of the LRAT proofs & $1.6$\,GB & $7.1$\,GB & $15.4$\,GB & $106$\,GB\\
+cube search, first to last record & $28$\,min & $28$\,min & $32$\,min & $3$\,h\,$48$\,min\\
+proof check, task time (sum over workers) & $0.3$\,h & $1.0$\,h & $1.6$\,h & $19$\,h\\
+\bottomrule
+\end{tabular}
+\end{center}
+The four searches of the second table ran together, on 3 November 2026, without interruption. The runs for the first table were stopped and resumed several times, so the times in its last two rows are approximate: ``first to last record'' includes pauses, and ``task time'' is the sum of the times of the single tasks over all workers. The proofs were written to a temporary folder and deleted after checking; they can be regenerated with the published scripts.
 
 \section{Reproducibility}
-Encodings, cube trees, results of the proof checks, checkers and colourings are available at \url{https://github.com/IchiTaku326/rado-ab}. The LRAT proofs themselves are not stored (they are large); they can be regenerated with the published scripts and checked again. The checker \texttt{cake\_lpr} was compiled with heaps of $4$ and $14$\,GB.
+Encodings, cube trees, results of the proof checks, checkers and colourings are available at \url{https://github.com/IchiTaku326/rado-ab} (release v2). The LRAT proofs themselves are not stored (they are large); they can be regenerated with the published scripts and checked again. The checker \texttt{cake\_lpr} was compiled with heaps of $4$ and $14$\,GB.
 
 \section*{Acknowledgements and disclosure}
 Programs, computation plans, parts of the proofs and parts of the text were developed with the help of an AI assistant (Claude, Anthropic). The author is responsible for the content.
@@ -213,7 +264,7 @@ Programs, computation plans, parts of the proofs and parts of the text were deve
 \bibitem{CDW22} Y.~Chang, J.\,A.~De Loera, W.\,J.~Wesley, Rado numbers and SAT computations, arXiv:2210.03262 (2022).
 \bibitem{HKM16} M.\,J.\,H.~Heule, O.~Kullmann, V.\,W.~Marek, Solving and verifying the Boolean Pythagorean triples problem via cube-and-conquer, \emph{SAT 2016}.
 \bibitem{Ich26a} T.~Ichikawa, The four-colour Rado number of $2(x-y)=3z$ is $226$: a cube-and-conquer computation with checked DRAT proofs, preprint, Zenodo (2026), \url{https://doi.org/10.5281/zenodo.23582301}.
-\bibitem{Ich26b} T.~Ichikawa, Rado numbers of $a(x-y)=bz$ with $a<b$: two colours, lower bounds for every number of colours, and the three-colour upper bound up to one statement, companion preprint (2026), \url{https://github.com/IchiTaku326/rado-ab}.
+\bibitem{Ich26b} T.~Ichikawa, Rado numbers of $a(x-y)=bz$ with $a<b$: two colours, lower bounds for every number of colours, and the three-colour upper bound up to one statement, companion preprint, Zenodo (2026), \url{https://doi.org/10.5281/zenodo.23902080}.
 \bibitem{THM21} Y.\,K.~Tan, M.\,J.\,H.~Heule, M.\,O.~Myreen, cake\_lpr: verified propagation redundancy checking in CakeML, in: \emph{TACAS 2021}, LNCS 12652, 223--241.
 \end{thebibliography}
 \end{document}

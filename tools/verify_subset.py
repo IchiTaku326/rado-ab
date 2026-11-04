@@ -306,8 +306,12 @@ def main():
     ok54 = sum(1 for t in tA if t[0] in ver and t[0].startswith("k4_5_4")); n54 = sum(1 for t in tA if t[0].startswith("k4_5_4"))
     ok65 = sum(1 for t in tA if t[0] in ver and t[0].startswith("k4_6_5")); n65 = sum(1 for t in tA if t[0].startswith("k4_6_5"))
     if TRY: print(f"[{now()}] small heap {TRY} MB: {TRYST['ok']} verified, {TRYST['fails']} need the full heap (state {TRYST['state']})", flush=True)
+    per = {}                                                   # 11-03: one count per job (also the --cube-jobs ones)
+    for t in tA:
+        tag = t[0].split("_cube")[0].split("_whole")[0]; c = per.setdefault(tag, [0, 0]); c[1] += 1; c[0] += t[0] in ver
+    jobs = "; ".join(f"{tag}: {c[0]}/{c[1]} VERIFIED" for tag, c in per.items())
     line = (f"[{now()}] (A) tree complete {'YES' if completeA else 'NO'}; R4(5,4)=741: {ok54}/{n54} cubes VERIFIED; R4(6,5)=1501: {ok65}/{n65} cubes VERIFIED | "
-            f"(B) 3 colours b <= {a.bmax}: {okB}/{len(tB)} cells VERIFIED")
+            f"(B) 3 colours b <= {a.bmax}: {okB}/{len(tB)} cells VERIFIED | per job: {jobs if jobs else '-'}")
     print(line); open(os.path.join(ROOT, "results", "proofcheck_subset_FINAL.txt"), "a", encoding="utf-8").write(line + "\n")
 
 
